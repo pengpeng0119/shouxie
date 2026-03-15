@@ -46,10 +46,12 @@ export default defineConfig({
       // },
       {
         text: "🎨 前端技术",
-        activeMatch: "^/frontEnd/",
+        activeMatch: "^/(frontEnd/|tools/questions/(handwrite|handwrite-practice))",
         items: [
           { text: "📝 HTML & CSS", link: "/frontEnd/css/dom", activeMatch: "^/frontEnd/css/" },
           { text: "⚡ JavaScript", link: "/frontEnd/javascript/", activeMatch: "^/frontEnd/javascript/" },
+          { text: "✍️ JS 手写题", link: "/tools/questions/handwrite", activeMatch: "^/tools/questions/handwrite$" },
+          { text: "💻 在线练习", link: "/tools/questions/handwrite-practice", activeMatch: "^/tools/questions/handwrite-practice$" },
           { text: "🖥️ 浏览器 API", link: "/frontEnd/window/properties", activeMatch: "^/frontEnd/window/" },
           { text: "🚀 现代框架", link: "/frontEnd/web/vue3-advanced", activeMatch: "^/frontEnd/web/" },
         ],

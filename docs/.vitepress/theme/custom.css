@@ -1,8 +1,8 @@
-
 /*释放最大内容宽度限制*/
 .content-container {
   max-width: max-content !important;
 }
+
 /*释放最大内容宽度限制*/
 .content-container .content {
   max-width: max-content !important;
@@ -431,6 +431,7 @@
 }
 
 @media (max-width: 768px) {
+
   .handwrite-practice__header,
   .handwrite-practice__toolbar,
   .handwrite-practice__panel-header,
