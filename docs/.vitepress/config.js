@@ -8,6 +8,7 @@ export default defineConfig({
   title: "💻 VitePress 技术文档站点",
   description: "专业的前端技术知识库，涵盖前端、后端、网络工程、开发工具等技术领域",
   lang: "zh-CN",
+  base: "/shouxie/",
 
   // ===== 头部配置 =====
   head: [
