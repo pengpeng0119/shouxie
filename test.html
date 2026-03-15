@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 1
+    const myNew = function (fn, ...args) {
+      if (typeof fn !== 'function') {
+        throw Error('类型错误！')
+      }
+      const obj = Object.create(fn.proptotype)
+      const res = fn.apply(obj, args)
+      return res instanceof Object ? res : obj
+    }
+    // 2
+    const mycall = function (obj, ...args) {
+      if (typeof this !== 'function') {
+        throw Error('类型错误！')
+      }
+      obj = obj || globalThis
+      const fnSymbol = Symbol('fn')
+      obj[fnSymbol] = this
+      const res = obj[fnSymbol](...args)
+      delete obj[fnSymbol]
+      return res
+    }
+    // 3
+    const myApply = function (obj, args) {
+      if (typeof this !== 'function') {
+        throw Error('类型错误！')
+      }
+      obj = obj ?? globalThis
+      const fnSymbol = Symbol('fn')
+      obj[fnSymbol] = this
+      const res = obj[fnSymbol](...args)
+      delete obj[fnSymbol]
+      return res
+    }
+    // 4
+    const myBind = function (obj, ...bindArgs) {
+      if (typeof this !== 'function') {
+        throw Error('类型错误！')
+      }
+      const that = this
+      obj = obj ?? globalThis
+      function fn(...args) {
+        const concatArgs = args.concat(bindArgs)
+        if (this instanceof boundFn) {
+          return that.apply(this, concatArgs)
+        }
+        return that.apply(obj, concatArgs)
+      }
+      if (that.prototype) {
+        fn.prototype = Object.create(that.proptotype)
+      }
+      return fn
+    }
+    // 5
+    const myInstanceof = function (left, right) {
+      if (typeof left !== 'object' || left === null) {
+        return false
+      }
+      const proto = left.__proto__
+      const prototype = right.prototype
+      while (proto !== null) {
+        if (proto === prototype) {
+          return true
+        }
+        proto = proto.__proto__
+      }
+      return false
+    }
+    // 6 
+    const myCreate = function (proto, propsObject) {
+      function f() { }
+      F.proptotype = proto
+      const obj = new F()
+      if (propsObject !== null) {
+        // 这里使用 Object.defineProperties 为新创建的对象 obj 批量添加 propsObject 中定义的属性描述符，实现对属性特性的自定义
+        Object.defineProperties(obj, propsObject)
+      }
+      return obj
+    }
+    // 7
+    Array.prototype.myForeach = function (callback, propThis) {
+      const arr = this
+      for (let i = 0, len = arr.length; i < len; i++) {
+        callback.call(propThis, arr[i], i, arr)
+      }
+    }
+    // 8
+    Array.prototype.myMap = function (callback, propThis) {
+      const arr = this
+      const resArr = new Array(arr.length)
+      for (let i = 0, len = arr.length; i < len; i++) {
+        resArr[i] = callback.call(propThis, arr[i], i, arr)
+      }
+      return resArr
+    }
+    // 9
+    Array.prototype.myFilter = function (callback, propThis) {
+      const arr = this
+      const len = arr.length
+      const resArr = []
+      for (let i = 0; i < len; i++) {
+        const value = arr[i]
+        if (callback.call(propThis, value, i, arr)) {
+          resArr.push(arr[i])
+        }
+      }
+      return resArr
+    }
+    // 10
+    Array.prototype.myReduce = function (callback, initVsl) {
+      const arr = this
+      // const res = initVsl
+      let res, startIndex
+      if (arguments.length >= 2) {
+        res = initVsl
+        startIndex = 1
+      } else {
+        res = arr[0]
+        startIndex = 0
+      }
+      for (let i = startIndex, len = arr.length; i < len; i++) {
+        res = callback(res, arr[i], i, arr)
+      }
+      return res
+    }
+    // 11
+    const dedupeByProp = function (arr, prop) {
+      const seen = new Map()
+      const res = []
+      for (const item of arr) {
+        const propVal = item[prop]
+        if (seen.has(propVal)) {
+          continue
+        }
+        seen.set(propVal, true)
+        res.push(propVal)
+      }
+      return res
+    }
+    const myDedupe = function (arr) {
+      return arr.filter((item, index) => arr.indexOf(item) === index)
+    }
+    //  12
+    const myFlat = function (arr, depth = 1) {
+      const res = []
+      for (let i = 0, len = arr.length; i < len; i++) {
+        if (Array.isArray(arr[item]) && depth > 0) {
+          res.push(...myFlat(arr[item], depth - 1))
+        } else {
+          res.push(arr[i])
+        }
+      }
+      return res
+    }
+  </script>
+</body>
+
+</html>
